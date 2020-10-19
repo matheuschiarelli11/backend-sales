@@ -1,6 +1,7 @@
 const AutenticationController = {
     async index(req, res) {
-        return res.send('aaa')
+        return res.send('aaa');
+        //teste
     }
 }
 
