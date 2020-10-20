@@ -1,7 +1,10 @@
 const AutenticationController = {
-    async index(req, res) {
-        return res.send('aaa');
-        //teste
+    async create(req, res) {
+        const {password, email} = req.body;
+
+        console.log(email, password);
+        return res.send('teste');
+
     }
 }
 
