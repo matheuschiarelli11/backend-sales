@@ -1,8 +1,9 @@
 const users = []
+const { v4: uuid } = require('uuid');
 
 const UserController = {
     async create(req, res) {
-        const {name, email, password} = req.body;
+        const { name, email, password} = req.body;
 
         if (!name) {
             return res.status(400).json({message: "Por favor, informe um nome"});
@@ -23,6 +24,7 @@ const UserController = {
        }
 
         const user = {
+            id: uuid(),
             name,
             email,
             password
@@ -34,28 +36,52 @@ const UserController = {
     },
 
     async update(req, res) {
+        const { id } = req.params;
         const {name, email, password} = req.body;
-        console.log(req.body);
 
-        return res.send("teste");
+        // const index = users.findIndex(function findUser(user){
+        //     if(user.id === id){
+        //         return user;
+        //     }
+        // });
+
+        const index = users.findIndex(user => user.id === id);
+
+        if(index < 0){
+            return res.status(400).json({message: "Usuário não encontrado."});
+        }
+
+        if(name){
+            users[index].name = name;
+        }
+
+        if(email){
+            users[index].email = email;
+        }
+
+        if(password){
+            users[index].password = password;
+        }
+
+       return res.status(200).json(users[index]);
     },
+
 
     async delete(req, res) {
         const {name, email, password} = req.body;
 
         users.find(function Destroy (element){
             const findEmail = element.email;
+
             if(findEmail === email){
                 users.splice(users.indexOf(findEmail), 1);
 
                 return res.status(200).json({message: "Usuário excluido."});
             }
 
-            if(findEmail != email){
-                return res.status(400).json({message: "Usuario não encontrado"});
-            }
+        });
 
-        })
+        return res.status(400).json({message: "Usuario não encontrado"});
     },
 
     async show(req, res){
