@@ -68,17 +68,16 @@ const UserController = {
 
 
     async delete(req, res) {
-        const {name, email, password} = req.body;
+        const {id, name, email, password} = req.body;
 
         users.find(function Destroy (element){
-            const findEmail = element.email;
+            const findId = element.id;
 
-            if(findEmail === email){
-                users.splice(users.indexOf(findEmail), 1);
+            if(findId === email){
+                users.splice(users.indexOf(findId), 1);
 
                 return res.status(200).json({message: "Usuário excluido."});
             }
-
         });
 
         return res.status(400).json({message: "Usuario não encontrado"});
