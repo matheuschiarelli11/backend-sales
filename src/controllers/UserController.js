@@ -1,6 +1,8 @@
 const users = []
 const { v4: uuid } = require('uuid');
 
+const jwt = require('jsonwebtoken');
+
 const UserController = {
     async create(req, res) {
         const { name, email, password} = req.body;
@@ -105,7 +107,35 @@ const UserController = {
         }
 
         return res.status(200).json(result);
+    },
+
+    async login(req, res){
+        const { email, password, } = req.body;
+
+        if(!email){
+            return res.status(400).json({message: "Envie um email"});
+        }
+
+      const userFound = users.find(user => user.email === email);
+
+      if(!userFound){
+          return res.status(400).json({message: "usuário inexistente"});
+      }
+
+      if(userFound.password !== password){
+        return res.status(400).json({message: "Senha incorreta"});
+      }
+
+      var token = jwt.sign({ userId: userFound.id }, "secret", {
+        expiresIn: 300
+      });
+
+      delete userFound.password;
+
+      return res.status(200).json({ user: userFound, token: token });
     }
 }
+
+
 
 module.exports = UserController;

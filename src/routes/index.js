@@ -15,5 +15,7 @@ routes.delete('/comp/:id', CompanyController.delete);
 routes.get('/comp', CompanyController.show);
 routes.put('/comp/:id', CompanyController.update);
 
+routes.get('/login', UserController.login);
+
 
 module.exports = routes;
