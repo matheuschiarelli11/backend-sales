@@ -36,7 +36,7 @@ const UserController = {
       id: uuid(),
       name,
       email,
-      password: password,
+      password,
     });
 
     // users.push(user);
