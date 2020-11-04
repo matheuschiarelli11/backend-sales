@@ -97,7 +97,6 @@ const UserController = {
 
   async UserEmail(req, res) {
     const { email } = req.body;
-    console.log(email);
 
     const result = users.find(element => email === element.email);
 
