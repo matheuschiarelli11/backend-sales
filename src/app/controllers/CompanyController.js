@@ -1,9 +1,10 @@
 const company = [];
 const { v4: uuid } = require('uuid');
+const Company = require('../models/Company');
 
 const CompanyController = {
   async create(req, res) {
-    const { name } = req.body;
+    const { name, cnpj } = req.body;
 
     if (!name) {
       return res
@@ -17,14 +18,20 @@ const CompanyController = {
       return res.status(400).json({ message: 'Nome da empresa já cadastrada' });
     }
 
-    const Company = {
+    // const Company = {
+    //   id: uuid(),
+    //   name,
+    // };
+
+    const companies = await Company.create({
       id: uuid(),
       name,
-    };
+      cnpj,
+    });
 
-    company.push(Company);
+    // company.push(Company);
 
-    return res.status(200).json(Company);
+    return res.status(200).json(companies);
   },
 
   async update(req, res) {

@@ -39,40 +39,30 @@ const UserController = {
       password,
     });
 
-    // users.push(user);
-
     return res.status(200).json(user);
   },
 
   async update(req, res) {
     const { id } = req.params;
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
 
-    // const index = users.findIndex(function findUser(user){
-    //     if(user.id === id){
-    //         return user;
-    //     }
-    // });
+    const user = await User.findByPk(id);
 
-    const index = users.findIndex(user => user.id === id);
-
-    if (index < 0) {
-      return res.status(400).json({ message: 'Usuário não encontrado.' });
+    if (!user) {
+      return res.status(400).json({ message: 'Usuário inexistente' });
     }
 
     if (name) {
-      users[index].name = name;
+      user.name = name;
     }
 
     if (email) {
-      users[index].email = email;
+      user.email = email;
     }
 
-    if (password) {
-      users[index].password = password;
-    }
+    await user.save();
 
-    return res.status(200).json(users[index]);
+    return res.status(200).json(user);
   },
 
   async delete(req, res) {
