@@ -17,12 +17,15 @@ class User extends Sequelize.Model {
 
     this.addHook('beforeSave', async user => {
       if (user.password) {
-        // eslint-disable-next-line
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
     });
 
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Company, { foreignKey: 'company_id' });
   }
 }
 
