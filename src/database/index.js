@@ -5,8 +5,9 @@ const User = require('../app/models/User');
 const databaseConfig = require('../config/database');
 
 const Company = require('../app/models/Company');
+const Product = require('../app/models/Product');
 
-const models = [User, Company];
+const models = [User, Company, Product];
 
 class Database {
   constructor() {
