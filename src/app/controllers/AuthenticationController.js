@@ -10,6 +10,12 @@ const AuthenticationController = {
 
       const user = await User.findOne({ where: { email } });
 
+      if (user.active === false) {
+        return res
+          .status(400)
+          .json({ message: 'Conta desativada, impossivel realizar um login' });
+      }
+
       if (!user) {
         return res.status(400).json({ error: 'Credenciais incorretas.' });
       }
