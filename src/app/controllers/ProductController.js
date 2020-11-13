@@ -1,4 +1,5 @@
 const { v4: uuid } = require('uuid');
+const fs = require('fs');
 const Product = require('../models/Product');
 
 const ProductController = {
@@ -35,6 +36,11 @@ const ProductController = {
       custom_field,
     });
     return res.status(200).json(product);
+  },
+  async readFile(req, res) {
+    console.log(req);
+
+    return res.status(200).json({});
   },
 };
 
