@@ -1,4 +1,5 @@
 const { v4: uuid } = require('uuid');
+const fs = require('fs');
 const Product = require('../models/Product');
 
 const ProductController = {
@@ -37,7 +38,18 @@ const ProductController = {
     return res.status(200).json(product);
   },
   async readFile(req, res) {
-    console.log(req.files);
+    fs.writeFile(
+      `./src/tmp/${req.files.product_file.name}`,
+      req.files.product_file.data,
+
+      function (err) {
+        if (err) {
+          console.log(err);
+        }
+
+        console.log('Ok');
+      },
+    );
 
     return res.status(200).json({});
   },
