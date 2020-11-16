@@ -1,5 +1,6 @@
 const { v4: uuid } = require('uuid');
 const fs = require('fs');
+
 const Product = require('../models/Product');
 
 const ProductController = {

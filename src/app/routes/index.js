@@ -1,5 +1,7 @@
 const express = require('express');
 
+const verifyJWT = require('../middlewares/verifyJWT');
+
 const routes = express.Router();
 const AuthenticationController = require('../controllers/AuthenticationController');
 const UserController = require('../controllers/UserController');
@@ -15,7 +17,7 @@ routes.post('/company', CompanyController.create);
 routes.delete('/company/:id', CompanyController.delete);
 routes.get('/company', CompanyController.show);
 routes.put('/company/:id', CompanyController.update);
-routes.post('/products/:company_id', ProductController.create);
-routes.post('/import-file', ProductController.readFile);
+routes.post('/products/:company_id', verifyJWT, ProductController.create);
+routes.post('/import-file', verifyJWT, ProductController.readFile);
 
 module.exports = routes;
